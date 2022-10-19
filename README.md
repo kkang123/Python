@@ -886,3 +886,57 @@ print(fruit)
 ['바나나', '딸기', '포도',  '망고', '감귤', '배',None]
 ['바나나', '딸기', '포도',  '망고', '감귤', '배']
 ```
+---
+> ## 선형 리스트의 일반 구현
+
+<br>
+
+1. 배열을 이용한 선형 리스트 생성    
+```python
+katok = []
+
+katok.append(None)
+배열길이 = len(katok)
+katok[배열길이 - 1] = '다현'
+print(katok)
+
+#출력
+['다현']
+
+
+katok.append(None)
+배열길이 = len(katok)
+print(배열길이) # 2
+katok[배열길이 - 1] = '정연' #katok[1]
+print(katok) #['다현', '정연']
+```
+2. 선형 리스트 생성 함수의 완성  
+선형 리스트의 끝에 데이터를 추가하는 함수를 작성해서 5명을 차례대로 추가하는 완전한 코드 만들기
+```python
+katok = [] #빈 배열을 전역변수로 정의
+
+def add_data(friend):
+
+    katok.append(None) #맨 뒤칸에 None추가
+    KLen = len(katok) #변수 길이
+    katok[KLen - 1] = friend #맨 뒤칸에 변수 추가
+
+add_data('영지')
+add_data('서준')
+add_data('효주')
+add_data('사나')
+add_data('유진')
+
+print(katok)
+```
+3. 데이터 삽입
+선형 리스트에 데이터를 삽입하는 방식 구현
+```python
+katok.append(None)
+
+for 현재위치 in range(마지막위치, 지정위치, -1):
+    katok[현재위치] = katok[현재위치 - 1]
+    katok[현재위치 - 1] = None
+
+katok[지정위치] = friend
+```

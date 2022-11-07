@@ -911,7 +911,7 @@ katok[배열길이 - 1] = '정연' #katok[1]
 print(katok) #['다현', '정연']
 ```
 2. 선형 리스트 생성 함수의 완성  
-선형 리스트의 끝에 데이터를 추가하는 함수를 작성해서 5명을 차례대로 추가하는 완전한 코드 만들기
+- 선형 리스트의 끝에 데이터를 추가하는 함수를 작성해서 5명을 차례대로 추가하는 완전한 코드 만들기
 ```python
 katok = [] #빈 배열을 전역변수로 정의
 
@@ -931,12 +931,341 @@ print(katok)
 ```
 3. 데이터 삽입
 선형 리스트에 데이터를 삽입하는 방식 구현
+- 중간 데이터 삽입
 ```python
-katok.append(None)
+katok.append(None) #선형 리스트에 빈칸 추가
 
 for 현재위치 in range(마지막위치, 지정위치, -1):
     katok[현재위치] = katok[현재위치 - 1]
     katok[현재위치 - 1] = None
+    #빈칸을 중간 자리에 이동
 
 katok[지정위치] = friend
+#중간에 있는 빈칸을 지정하여 데이터 추가
+```
+
+- 맨 끝 데이터 삽입
+```python
+katok.append[None]
+
+for 현재위치 in range(마지막위치, 지정위치, -1): #작동하지 않음
+    katok[현재위치] = katok[현재위치 -1]
+    katok[현재위치 - 1] = None
+
+    katok[지정위치] = friend #데이터 추가
+```
+
+4. 데이터 삽입 함수의 완성
+```python
+#Code03-02.py
+
+katok = ["다현", "정연", "쯔위", "사나", "지효"]
+
+def insert_data(position, friend):
+
+    if position < 0 or position > len(katok):
+        print("데이터를 삽입할 범위를 벗어났습니다.")
+        return
+    
+    katok.append(None) #빈칸 추가
+    KLen = len(katok) #배열의 현재 크기
+
+    #(마지막 위치, 지정위치, -1)
+    #KLen - 1 '마지막 위치' =전체 길이가 6이면 마지막 인덱스는 5
+    for i in range(KLen - 1, position, -1): 
+        katok[i] = katok[i-1]
+        katok[i-1] = None
+
+    katok[position] = friend #지정한 위치에 친구 추가
+
+insert_data(2, '솔라') #함수 작동
+print(katok)
+insert_data(6, '문별')
+print(katok)
+
+
+'''
+for문 range(값1, 값2, 값3)에서 값1과 값2가 같으면 한번도 수행하지 않는다.
+'''
+```
+
+5. 데이터 삭제
+- 중간 데이터 삭제  
+중간에 있는 데이터를 삭제 후 생긴 **빈칸**에 뒤에 있는 데이터들을 땡겨와 채워 준 후 맨 뒤에 생긴 빈칸을 삭제한다.
+```python
+katok[지정위치] = None
+
+for 현재위치 in range(지정위치 + 1, 마지막위치 + 1):
+    katok[현재위치 - 1] = katok[현재위치]
+    katok[현재위치] = None
+
+    del(katok[지정위치])
+```
+
+- 맨 마지막 데이터 삭제
+```python
+katok[지정위치] = None
+
+for 현재위치 in range(지정위치 + 1, 마지막위치 + 1):
+    katok[현재위치 - 1] = katok[현재위치]
+    katok[현재위치] = None
+
+    del(katok[지정위치])
+
+#삭제 위치가 중간이든 마지막이든 동일한 코드 작동
+```
+
+- 데이터 삭제 함수의 완성
+```python
+#Code03-03.py
+
+katok = ["다현", "정연", "쯔위", "사나", "지효"]
+
+def delete_data(position):
+
+    if position < 0 or position > len(katok):
+        print("데이터를 삽입할 범위를 벗어났습니다.")
+        return
+    
+    KLen = len(katok) #배열의 현재 크기
+    katok[position] = None #데이터 삭제
+
+    #position + 1은 삭제한 다음 위치
+    for i in range(position + 1, KLen): 
+        katok[i - 1] = katok[i]
+        katok[i] = None #배열 맨 마지막 위치 삭제
+
+    del(katok[KLen - 1])
+
+delete_data(1)
+print(katok)
+delete_data(3)
+print(katok)
+```
+
+6. 기본 선형 리스트의 완성
+```python
+#Code03-04.py
+#선형 리스트 처리 프로그램
+
+def add_data(friend):
+
+    katok.append(None)
+    KLen = len(katok)
+    katok[KLen - 1] = friend
+
+def insert_data(position, friend):
+
+    if position < 0 or position > len(katok):
+        print("데이터를 삽입할 범위를 벗어났습니다.")
+        return
+    
+    katok.append(None) #빈칸 추가
+    KLen = len(katok) #배열의 현재 크기
+
+    for i in range(KLen - 1, position, -1): 
+        katok[i] = katok[i-1]
+        katok[i-1] = None
+
+    katok[position] = friend #지정한 위치에 친구 추가
+
+def delete_data(position):
+
+     if position < 0 or position > len(katok):
+        print("데이터를 삽입할 범위를 벗어났습니다.")
+        return
+    
+    KLen = len(katok) #배열의 현재 크기
+    katok[position] = None #데이터 삭제
+
+    for i in range(position + 1, KLen): 
+        katok[i - 1] = katok[i]
+        katok[i] = None #배열 맨 마지막 위치 삭제
+
+    del(katok[KLen - 1])
+
+## 전역 변수 선언
+katok = []
+select = -1 #1: 추가,  2: 삽입, 3: 삭제, 4: 종료
+
+# 메인코드
+if __name__ = "__main__":
+
+    while(select != 4):
+
+        select = int(input("선택하세요(1: 추가,  2: 삽입, 3: 삭제, 4: 종료)-->"))
+
+        if(select == 1):
+            data = input("추가할 데이터 -->")
+            add_data(data)
+            print(katok)
+        elif(select == 2):
+            pos = int(input("삽입할 위치 -->"))
+            data = input("추가할 데이터 -->")
+            insert_data(pos, data)
+            print(katok)
+        elif(select == 3):
+            pos = int(input("삭제할 위치-->"))
+            delete_data(pos)
+            print(katok)
+        elif(select == 4):
+            print(katok)
+            exit
+        else:
+            print("1~4 중 하나를 입력하세요.")
+            continue
+```
+---
+> 선형 리스트의 응용
+1. 다항식의 선형 리스트 표현  
+선형 리스트의 가장 많은 응용 중 하나는 다항식(Polynomial)을 저장하고 활용하는 것이다.  
+
+<br>
+
+다항식 형식  
+`P(x) = a + bx + cx^2 + dx^3 + ... + zx^n`
+
+<br>
+
+`P(x) = 7x^3 - 4x^2 + 5`  
+`P(x) = 7x^3 - 4x^2 + 0X^1 + 5X^0`  
+
+<br>
+
+선형리스트로 표현 하면 `| 7 | -4 | 0 | 5 |` 로 짜여진 배열 완성
+
+```python
+px = [7, -4, 0, 5]
+print(px)
+```
+```python
+x = 2
+pxVal = 7*x**3 - 4*x**2 + 0*x**1 + 5*x**0
+print(pxVal) #45
+```
+```python
+px = px = [7, -4, 0, 5]
+polyStr = "P(x) = "
+polyStr += " + " + str(px[0]) + "x^" + str(3) #x**3
+polyStr += " + " + str(px[1]) + "x^" + str(2)
+polyStr += " + " + str(px[2]) + "x^" + str(1)
+polyStr += " + " + str(px[3]) + "x^" + str(0)
+print(polyStr)
+
+# P(x) = 7x^3 + -4x^2 + 0x^1 + 5x^0
+```
+
+2. 다항식의 선형 리스트 표현과 계산 프로그램  
+- 계산 함수 : calcPoly()
+- 다항식 형태 출력 함수 : printPoly()
+
+```python
+#Code03-05.py
+#다항식 선형 리스트 표현과 계산 프로그램
+
+# 2~14행 30행의 다항식 계수 배열
+def printPoly(p_x):
+    term = len(p_x) - 1 #최고차항 숫자 = 배열 길이 - 1
+    polyStr = "P(x) = " #polyStr에 다항식 형태의 문자열을 만들고자 P(x) 값을 우선 대입
+
+    for i in range(len(px)): #계수x^차수 형식 반복
+        coef = p_x[i] # 계수
+
+        if (coef >= 0):
+            polyStr += "+"
+        polyStr += str(coef) + "x^" + str(term) + " "
+        term -= 1
+
+    return polyStr
+
+
+def calcPoly(xVal, p_x):
+    retValue = 0 #계산할 다항식을 0으로 초기화
+    term = len(p_x) - 1 #최고차항 숫자 = 배열 길이 - 1, 크기가 4라면 최고차항은 x^3이 된다.
+    
+    for i in range(len(px)):
+        coef = p_x[i] #계수
+        retValue += coef * xValue ** term
+        term -= 1
+
+    return retValue
+# 배열 개수만큼 다항식 계산, 22행에서 계수를 추출하고 23행에서 "계수 * x값 ** 차수"를 계산한다. 24행에서 항의 차수를 1 감소시킨다.
+
+#전역 변수
+px = [7, -4, 0, 5] #7x^3 + -4x^2 + 0x^1 + 5x^0
+
+
+
+if __name__ == "__main__":
+
+    pStr = printPoly(px)
+    print(pStr)
+
+    xValue = int(input("X 값 -->"))
+
+    pxValue = calcPoly(xValue, px)
+    print(pxValue)
+```
+3. 특수 다항식 처리 프로그램
+- 지수가 상당히 큰 다항식은 어떻게 처리하는지  
+
+`ex)`  
+- P(x) 7x^300 + (-4)x^20 + 5
+```python
+px = [7, -4, 0, 5] #7x^3 + -4x^2 + 0x^1 + 5x^0
+'이 부분을 0000000000000000000000000000.....으로 선언해야한다.'
+```
+
+<br>
+
+이를 간단히 처리하기 위해 모든 계수를 저장하지 않고 0 이 아닌 계수와 항의 차수와 저장하는 방식을 사용할 수있다.
+```python
+tx = [300, 20, 0] #항 차수
+px = [7, -4, 5] # 각 항 위치의 계수
+```
+
+<br>
+
+```python
+#Code03-06.py
+#특수 다항식의 선형 리스트 표현과 계산 프로그램
+
+#함수 선언
+def printPoly(t_x, p_x):
+    polyStr = "P(x) ="
+
+    for i in range(len(p_x)):
+        term = t_x[i] # 항 차수
+        coef = p_x[i] # 계수
+
+        if(coef > 0) :
+            polyStr += " + "
+        polyStr += str(coef) + "X^" + str(term) + " "
+    
+    return polyStr
+
+def calcPoly(xVal, t_x, p_x) :
+    retValue = 0
+
+    for i in range(len(px)):
+        term = t_x[i] # 항 차수
+        coef = p_x[i] # 계수
+        retValue += coef * xValue ** term
+        term -= 1
+
+    return retValue
+
+
+tx = [300, 20, 0] 
+px = [7, -4, 5]
+
+
+if __name__ == "__main__" :
+    pStr = printPoly(tx, px)
+    print(pStr)
+
+    xValue = int(input("X 값 -->"))
+
+    pxValue = calcPoly(xValue, tx, px)
+    print(pxValue)
 ```
